@@ -1,0 +1,8 @@
+{
+    "require": {
+        "illuminate/container": "^8.58",
+        "php-di/php-di": "^6.3",
+        "rdlowrey/auryn": "^1.4",
+        "symfony/dependency-injection": "^5.3"
+    }
+}
