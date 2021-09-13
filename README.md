@@ -37,7 +37,7 @@ Since Capsule is the focal point for these comparisons, it makes sense to start
 with it. You can find the Capsule code at <https://github.com/capsulephp/di>.
 The example code for the scenario is [here](./capsule.php).
 
-Some notes:
+Capsule **does** complete the scenario:
 
 1. Each definition is a dynamic property on the container, addressed using the
 `{}` notation.
