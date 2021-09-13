@@ -226,8 +226,7 @@ Thus, the final tally of which container systems completed the scenario:
 Does this mean the containers that could not complete the scenario are
 somehow "bad" or "wrong"? No -- but it does mean I was wrong to think that the
 features highlighted by the scenario are commonplace. Different scenarios might
-show off these containers in a better or worse light. (Capsule would not be able
-to complete a scenario with tagging, for example.)
+show off these containers in a better or worse light.
 
 Regardless, this exercise does show some of the differences between the example
 container systems using a practical example, which was the only point of doing
