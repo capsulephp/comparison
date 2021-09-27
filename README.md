@@ -28,8 +28,9 @@ But what I thought would be easy turned out to be difficult or impossible in
 some AWDI containers.
 
 Below you will find code for the scenario using Auryn, League Container,
-Illuminate Container, and PHP-DI. Each container example uses the same
-[setup](./setup.php) with an `output()` function for inspecting the results.
+Illuminate Container, PHP-DI, and Symfony Dependency Injection. Each container
+example uses the same[setup](./setup.php) with an `output()` function for
+inspecting the results.
 
 ### Capsule
 
@@ -215,6 +216,56 @@ bar-right
 baz-right
 ```
 
+### Symfony Dependency Injection
+
+(Thanks to [ahundiak](https://github.com/ahundiak) for
+[providing the code](https://github.com/capsulephp/comparison/issues/1)
+in this example.)
+
+You can find the Symfony Dependency Injection code at
+<https://github.com/symfony/dependency-injection>. The example code for the
+scenario is [here](./symfony.php).
+
+Symfony **does not** complete the scenario. The Symfony container must
+be compiled before it can be used; in turn, the environment variables must be in
+place before the container is compiled. Compiling the container before the
+environment variables are available results in `EnvNotFoundException`s.
+
+The only way the Symfony code can run at all is to define the environment
+variables **before** compiling and using the container, something that is not
+required by any of the other systems under consideration.
+
+1. The _PDO_ arguments are specified as environment variables via a special
+string notation, e.g. `'%env(DB_DSN)%'`.
+
+2. The _Foo_ class is marked as autowired, and further marked as a public
+service that can be retrieved from anywhere.
+
+3. The explicit _Foo_ arguments likewise have to be specified individually; the
+$bar argument is purposely set to "wrong" so that we can see later if it is
+overridden properly.
+
+4. The _Foo_ $bar argument is re-defined, to simulate a new configuration being
+loaded with override values.
+
+5. In order to avoid `EnvNotFoundException`s, the environment variables are
+defined before compiling the container.
+
+6. The container is compiled before use.
+
+The output in the modified scenario is correct ...
+
+```
+PDO
+bar-right
+baz-right
+```
+
+... because the environment has to be loaded before the container is compiled
+and used, I don't think this counts as "lazy loading" of the environment
+variables. As a result, I have to count this as "does not complete the
+scenario".
+
 ## Summary
 
 Thus, the final tally of which container systems completed the scenario:
@@ -224,6 +275,7 @@ Thus, the final tally of which container systems completed the scenario:
 - League: no
 - Illuminate: yes, with workarounds
 - PHP-DI: yes, with workarounds
+- Symfony: no
 
 Does this mean the containers that could not complete the scenario are
 somehow "bad" or "wrong"? No -- but it does mean I was wrong to think that the
