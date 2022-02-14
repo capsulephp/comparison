@@ -28,7 +28,7 @@ But what I thought would be easy turned out to be difficult or impossible in
 some AWDI containers.
 
 Below you will find code for the scenario using Auryn, League Container,
-Illuminate Container, PHP-DI, and Symfony Dependency Injection. Each container
+Illuminate Container, PHP-DI, Symfony Dependency Injection and Ray.Di. Each container
 example uses the same[setup](./setup.php) with an `output()` function for
 inspecting the results.
 
@@ -266,6 +266,25 @@ and used, I don't think this counts as "lazy loading" of the environment
 variables. As a result, I have to count this as "does not complete the
 scenario".
 
+### Ray.Di
+
+You can find the Ray.Di code at <https://github.com/ray-di/Ray.Di>. The example
+code for the scenario is [here](./ray-di.php).
+
+Ray.Di **does** complete the scenario.
+
+1. The PDO arguments are bound to a [Provider](https://github.com/ray-di/Ray.Di#provider-bindings) class that provides the values for them in runtime. 
+2. The Foo $bar argument is purposely set to "wrong" with [instance bidning](https://github.com/ray-di/Ray.Di#instance-bindings) so that we can see later if it is overridden properly.
+3. The _Foo_ $bar argument is re-defined, to simulate a new configuration being loaded with override values.
+
+The `output()` is correct:
+
+```
+PDO
+bar-right
+baz-right
+```
+
 ## Summary
 
 Thus, the final tally of which container systems completed the scenario:
@@ -276,6 +295,7 @@ Thus, the final tally of which container systems completed the scenario:
 - Illuminate: yes, with workarounds
 - PHP-DI: yes, with workarounds
 - Symfony: no
+- Ray.Di: yes
 
 Does this mean the containers that could not complete the scenario are
 somehow "bad" or "wrong"? No -- but it does mean I was wrong to think that the

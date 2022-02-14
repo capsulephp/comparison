@@ -1,6 +1,7 @@
 {
     "require": {
         "capsule/di": "^3.1",
-        "league/container": "^4.1"
+        "league/container": "^4.1",
+        "ray/di": "^2.13"
     }
 }
